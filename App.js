@@ -5,7 +5,9 @@ import DeckList from "./components/DeckList";
 export default class App extends React.Component {
   render() {
     return (
-      <DeckList />
+      <View style={{flex: 1}}>
+        <DeckList />
+      </View>
     );
   }
 }

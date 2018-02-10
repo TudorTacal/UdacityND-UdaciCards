@@ -1,22 +1,26 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Dimensions } from 'react-native';
 
 class DeckList extends React.Component {
     render () {
         return (
-            <View style={styles.container}>
-                <Text>Mobile flash cards</Text>
+            <View>
+                <View style={{borderTopColor: 'black', borderTopWidth: 1, marginTop: 40}}/>
+                <View style={styles.deckHeader}>
+                    <Text style={{fontSize: 20, padding: 20}}>DECKS</Text>
+                </View>
             </View>
         )
     }
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
+    deckHeader: {
+        width: Dimensions.get('window').width / 2,
+        borderBottomColor: '#FFFF00',
+        borderBottomWidth: 3,
+        alignItems: 'center',
+    }
   });
 
 export default DeckList;
