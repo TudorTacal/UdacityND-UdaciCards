@@ -1,7 +1,9 @@
 import { AsyncStorage } from 'react-native';
 
 // getDecks: return all of the decks along with their titles, questions, and answers. 
-export const getDecks = () => {}
+export const getDecks = () => {
+  return AsyncStorage.getItem("decks").then(JSON.parse).then((decks) => {return decks});
+}
 
 // getDeck: take in a single id argument and return the deck associated with that id. 
 export const getDeck = (id) => {}
@@ -12,7 +14,7 @@ export const saveDeckTitle = (title) => {}
 // addCardToDeck: take in two arguments, title and card, and will add the card to the list of questions for the deck with the associated title. 
 export const addCardToDeck = (title, card) => {}
 
-export const decks = [
+export const startingDecks = [
     {
         React: {
           title: 'React',
