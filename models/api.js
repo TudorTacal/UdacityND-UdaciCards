@@ -14,7 +14,7 @@ export const saveDeckTitle = (title) => {}
 // addCardToDeck: take in two arguments, title and card, and will add the card to the list of questions for the deck with the associated title. 
 export const addCardToDeck = (title, card) => {}
 
-export const startingDecks = [
+export const decks = [
     {
         React: {
           title: 'React',
