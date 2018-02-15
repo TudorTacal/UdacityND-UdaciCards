@@ -20,7 +20,10 @@ class DeckView extends React.Component{
                     }>
                         <Text style={{fontSize: 20, fontWeight: 'bold'}}>Add Card</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.startQuizButton}>
+                    <TouchableOpacity 
+                        style={styles.startQuizButton}
+                        onPress={() => this.props.navigation.navigate('QuizView')
+                    }>
                         <Text style={{fontSize: 20, fontWeight: 'bold', color: white}}>Start Quiz</Text>
                     </TouchableOpacity>
                 </View>
