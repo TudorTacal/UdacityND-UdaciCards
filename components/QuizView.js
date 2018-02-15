@@ -7,7 +7,9 @@ import { white, black, gray }from "../utils/colors";
 class QuizView extends React.Component {
     render() {
         return (
-            <View><Text>Hello</Text></View>
+            <View>
+                <TextInput>Insert card name</TextInput>
+            </View>
         )
     }
 }
