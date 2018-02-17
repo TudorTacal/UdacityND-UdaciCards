@@ -3,10 +3,25 @@ import { StyleSheet, Text, View,
     Dimensions, FlatList, AsyncStorage,
     TouchableOpacity, Button } from 'react-native';
 import { white, black, gray }from "../utils/colors";
+import * as api from "../models/api";
 
 class DeckView extends React.Component{
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            deck: null, 
+         };
+         this.refreshFunction = this.refreshFunction.bind(this);
+    }
+
+     refreshFunction = () => {
+        api.getDeck(this.props.navigation.state.params.deck.title)
+            .then((data) => this.setState({deck: data}));
+    }
+
     render() {
-        let deck = this.props.navigation.state.params.deck;
+        let deck = this.state.deck || this.props.navigation.state.params.deck;
         return(
             <View style={{justifyContent: 'space-around', flex: 1}}>
                 <View style={styles.deck}>
@@ -16,7 +31,7 @@ class DeckView extends React.Component{
                 <View style={{alignItems: 'center'}}>
                     <TouchableOpacity 
                         style={styles.addCardButton} 
-                        onPress={() => this.props.navigation.navigate('NewQuestionView', { deck })
+                        onPress={() => this.props.navigation.navigate('NewQuestionView', { deck, refreshScreen: this.refreshFunction })
                     }>
                         <Text style={{fontSize: 20, fontWeight: 'bold'}}>Add Card</Text>
                     </TouchableOpacity>

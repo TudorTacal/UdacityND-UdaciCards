@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, Dimensions, FlatList, AsyncStorage, TouchableOpacity } from 'react-native';
-import { decks, getDecks } from '../models/api';
+import { decks, getDecks, getDeck } from '../models/api';
 import { AppLoading } from 'expo';
 import { DeckView } from './DeckView';
 
@@ -16,20 +16,14 @@ class DeckList extends React.Component {
 
     constructor(props) {
         super(props)
-
-        this.getDecksAsync = this.getDecksAsync.bind(this);
-
         this.state = {
             decks: null,
         }
     }
-    getDecksAsync() {
-        return getDecks();
-    }
 
     componentDidMount() {
         AsyncStorage.setItem("decks", JSON.stringify(decks));
-        this.getDecksAsync().then((data) => this.setState({decks: data}));
+        getDecks().then((data) => this.setState({decks: data}));
     }
 
     render () {

@@ -3,22 +3,26 @@ import { StyleSheet, Text, View,
     Dimensions, FlatList, AsyncStorage,
     TouchableOpacity, Button, TextInput } from 'react-native';
 import { white, black, gray }from "../utils/colors";
+import * as api from "../models/api";
 
 class NewQuestionView extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { 
+        this.state = {
             question: "Add question",
             answer: "Add answer"
          };
-         this.saveCardToDeck = this.saveCardToDeck.bind(this);
+         this.addCardToDeckAsync = this.addCardToDeckAsync.bind(this);
     }
 
-    saveCardToDeck = () => {
-
+    addCardToDeckAsync = (title, card) => {
+        this.props.navigation.state.params.refreshScreen();
+        return api.addCardToDeck(title, card);
     }
 
     render() {
+        let deckId = this.props.navigation.state.params.deck.title;
+        let card = Object.assign({}, this.state);
         return (
             <View style={{flex: 1, alignItems: 'center'}}>
                 <TextInput 
@@ -31,7 +35,7 @@ class NewQuestionView extends React.Component {
                     onChangeText={(answer) => this.setState({answer})}/>
                 <TouchableOpacity 
                     style={styles.submitButton}
-                    onPress={()=> saveCardToDeck()}>
+                    onPress={()=> this.addCardToDeckAsync(deckId, card)}>
                     <Text style={{color: white, fontSize: 24}}>Submit</Text>
                 </TouchableOpacity>
             </View>
