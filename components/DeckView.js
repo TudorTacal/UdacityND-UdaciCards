@@ -1,9 +1,11 @@
 import React from 'react';
 import { StyleSheet, Text, View,
     Dimensions, FlatList, AsyncStorage,
-    TouchableOpacity, Button } from 'react-native';
+    TouchableOpacity, Button, Promise } from 'react-native';
 import { white, black, gray }from "../utils/colors";
 import * as api from "../models/api";
+import { AppLoading } from 'expo';
+
 
 class DeckView extends React.Component{
 
@@ -15,14 +17,19 @@ class DeckView extends React.Component{
          this.refreshFunction = this.refreshFunction.bind(this);
     }
 
-     refreshFunction = () => {
-        api.getDeck(this.props.navigation.state.params.deck.title)
-            .then((data) => this.setState({deck: data}));
+     refreshFunction = (title) => {
+        api.getDecks()
+            .then((data) => {
+                deckObject = data.filter(deck => Object.keys(deck)[0] == title)[0];
+                return this.setState({deck: deckObject[Object.keys(deckObject)[0]]})});
     }
 
     render() {
-        let deck = this.state.deck || this.props.navigation.state.params.deck;
-        return(
+        let deckFromProps = this.props.navigation.state.params != (null || undefined) ? 
+            this.props.navigation.state.params.deck : null;
+        let deck = this.state.deck || deckFromProps;
+        return deck == null ?  
+            <AppLoading/> :
             <View style={{justifyContent: 'space-around', flex: 1}}>
                 <View style={styles.deck}>
                     <Text style={{fontSize: 50, fontWeight: 'bold'}}>{deck.title.toLowerCase()}</Text>
@@ -31,7 +38,7 @@ class DeckView extends React.Component{
                 <View style={{alignItems: 'center'}}>
                     <TouchableOpacity 
                         style={styles.addCardButton} 
-                        onPress={() => this.props.navigation.navigate('NewQuestionView', { deck, refreshScreen: this.refreshFunction })
+                        onPress={() => this.props.navigation.navigate('NewQuestionView', { deck, refreshFunction: this.refreshFunction})
                     }>
                         <Text style={{fontSize: 20, fontWeight: 'bold'}}>Add Card</Text>
                     </TouchableOpacity>
@@ -43,7 +50,7 @@ class DeckView extends React.Component{
                     </TouchableOpacity>
                 </View>
             </View>
-        )
+        
     }
 }
 

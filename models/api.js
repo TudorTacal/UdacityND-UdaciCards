@@ -9,9 +9,10 @@ export const getDecks = () => {
 
 // getDeck: take in a single id argument and return the deck associated with that id. 
 export const getDeck = async (id) => {
-  return AsyncStorage.getItem(`${id}`)
-    .then(JSON.parse)
-    .then(data => data[Object.keys(data)[0]]);
+  getDecks().then(data => {
+    deck = decks.filter(deck => Object.keys(deck)[0] == id)[0];
+    return deck;
+  })
 }
 
 // saveDeckTitle: take in a single title argument and add it to the decks. 
@@ -22,7 +23,7 @@ export const addCardToDeck = (title, card) => {
     getDecks().then((decks) => {
       let deckObject = decks.filter(deck => Object.keys(deck)[0] == title)[0];
       deckObject[title].questions.push(card);
-      AsyncStorage.mergeItem(`${title}`, JSON.stringify(deckObject));
+      return AsyncStorage.setItem("decks", JSON.stringify(decks));
   });
 }
 

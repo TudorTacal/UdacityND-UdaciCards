@@ -22,7 +22,6 @@ class DeckList extends React.Component {
     }
 
     componentDidMount() {
-        AsyncStorage.setItem("decks", JSON.stringify(decks));
         getDecks().then((data) => this.setState({decks: data}));
     }
 
@@ -41,7 +40,10 @@ class DeckList extends React.Component {
                             <TouchableOpacity    
                                 onPress={() => this.props.navigation.navigate(
                                 'DeckView', 
-                                { deck: item.key }
+                                { 
+                                    deck: item.key,
+                                    refreshFunction: this.refreshFunction
+                                }
                             )}>
                                 <View style={styles.deck}>
                                     <Text style={{fontSize: 40}}>{item.key.title.toLowerCase()}</Text>

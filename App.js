@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, AsyncStorage } from 'react-native';
 import DeckList from "./components/DeckList";
 import DeckView from "./components/DeckView";
 import NewQuestionView from "./components/NewQuestionView";
@@ -9,11 +9,29 @@ import {
 } from 'react-navigation';
 import  Icon from 'react-native-vector-icons/MaterialIcons';
 import { white, black } from "./utils/colors";
+import { decks } from './models/api';
+
+AsyncStorage.setItem("decks", JSON.stringify(decks));
 
 const createArrowBack = (navigation) => {
   return (
     <Icon.Button name="arrow-back" size={28} backgroundColor={black} 
-      onPress={() => navigation.goBack(null)}/>
+      onPress={() =>  navigation.goBack(null)}/>
+  )
+}
+
+const createArrowBackDeckView = (navigation) => {
+  return (
+    <Icon.Button name="arrow-back" size={28} backgroundColor={black} 
+      onPress={() =>  navigation.navigate("DeckView")}/>
+  )
+}
+
+const createArrowBackMain = (navigation) => {
+  return (
+    <Icon.Button name="arrow-back" size={28} backgroundColor={black} 
+      onPress={() => {
+       return navigation.navigate("Home")}} />
   )
 }
 
@@ -23,12 +41,16 @@ const MainNavigator = StackNavigator({
   },
   DeckView: {
     screen: DeckView,
-    navigationOptions: {
-      title: "udacicards",
-      headerTitleStyle : {alignSelf: "flex-start", marginLeft: -10, fontSize: 20, fontWeight: 'bold',  },
-      headerTintColor: "white",
-      headerStyle: {
-        backgroundColor: "black",
+    navigationOptions: ({navigation}) => {
+      return {
+        title: "udacicards",
+        headerTitleStyle : {alignSelf: "flex-start", marginLeft: -10, fontSize: 20, fontWeight: 'bold',  },
+        headerTintColor: "white",
+        headerStyle: {
+          backgroundColor: "black",
+        },
+        headerLeft: createArrowBackMain(navigation)
+
       }
     } 
   },

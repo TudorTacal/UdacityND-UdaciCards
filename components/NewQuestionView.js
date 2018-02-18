@@ -16,8 +16,8 @@ class NewQuestionView extends React.Component {
     }
 
     addCardToDeckAsync = (title, card) => {
-        this.props.navigation.state.params.refreshScreen();
-        return api.addCardToDeck(title, card);
+        api.addCardToDeck(title, card);
+        this.props.navigation.state.params.refreshFunction(title);
     }
 
     render() {
