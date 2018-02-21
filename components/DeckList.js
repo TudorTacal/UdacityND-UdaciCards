@@ -19,6 +19,11 @@ class DeckList extends React.Component {
         this.state = {
             decks: null,
         }
+        this.fetchDecksAsync = this.fetchDecksAsync.bind(this);
+    }
+
+    fetchDecksAsync = () => {
+        getDecks().then((data) => this.setState({decks: data}));
     }
 
     componentDidMount() {
@@ -42,7 +47,7 @@ class DeckList extends React.Component {
                                 'DeckView', 
                                 { 
                                     deck: item.key,
-                                    refreshFunction: this.refreshFunction
+                                    fetchDecksAsync: this.fetchDecksAsync
                                 }
                             )}>
                                 <View style={styles.deck}>

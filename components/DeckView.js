@@ -15,6 +15,7 @@ class DeckView extends React.Component{
             deck: null, 
          };
          this.refreshFunction = this.refreshFunction.bind(this);
+         this.addCard = this.addCard.bind(this);
     }
 
      refreshFunction = (title) => {
@@ -24,7 +25,19 @@ class DeckView extends React.Component{
                 return this.setState({deck: deckObject[Object.keys(deckObject)[0]]})});
     }
 
+    addCard = (title, card) => {
+        let newDeck = this.state.deck;
+        newDeck.questions.push(card);
+        this.setState({deck: newDeck})
+        this.props.navigation.state.params.fetchDecksAsync();
+    }
+
+    componentDidMount() {
+        this.setState({deck: this.props.navigation.state.params.deck});
+    }
+
     render() {
+        console.log(this.state.deck, 'in render');
         let deckFromProps = this.props.navigation.state.params != (null || undefined) ? 
             this.props.navigation.state.params.deck : null;
         let deck = this.state.deck || deckFromProps;
@@ -38,13 +51,13 @@ class DeckView extends React.Component{
                 <View style={{alignItems: 'center'}}>
                     <TouchableOpacity 
                         style={styles.addCardButton} 
-                        onPress={() => this.props.navigation.navigate('NewQuestionView', { deck, refreshFunction: this.refreshFunction})
+                        onPress={() => this.props.navigation.navigate('NewQuestionView', { deck, refreshFunction: this.refreshFunction, addCard: this.addCard})
                     }>
                         <Text style={{fontSize: 20, fontWeight: 'bold'}}>Add Card</Text>
                     </TouchableOpacity>
                     <TouchableOpacity 
                         style={styles.startQuizButton}
-                        onPress={() => this.props.navigation.navigate('QuizView')
+                        onPress={() => this.props.navigation.navigate('QuizView', { deck })
                     }>
                         <Text style={{fontSize: 20, fontWeight: 'bold', color: white}}>Start Quiz</Text>
                     </TouchableOpacity>
@@ -75,7 +88,7 @@ const styles = StyleSheet.create({
         height: 80,
         width: 220,
         backgroundColor: black,
-        borderRadius: 7
+        borderRadius: 7,
     },
   });
 
