@@ -10,14 +10,36 @@ class QuizView extends React.Component {
         super(props)
 
         this.state = {
-
+            deck: this.props.navigation.state.params.deck,
+            showQuestion: true,
+            showAnswer: false,
+            correctAnswers: 0,
+            incorrectAnswers: 0,
+            cardInPlay: this.props.navigation.state.params.deck.questions[0]
         }
+
+        this.showAnswer = this.showAnswer.bind(this);
+        this.showQuestion = this.showQuestion.bind(this);
+    }
+
+    showAnswer = () => {
+        this.setState({showAnswer: true, showQuestion: false});
+    }
+
+    showQuestion = () => {
+        this.setState({showAnswer: false, showQuestion: true});
+    }
+
+    trackScoreAndDisplayNextCard = (status) => {
+        let nextCardIndex = this.state.deck.questions.indexOf(this.state.cardInPlay)+1;
+        this.setState({[status]: status+1});
+        this.setState({cardInPlay: this.state.deck.questions[nextCardIndex]});
     }
 
     render() {
-        let deck = this.props.navigation.state.params.deck;
+        let deck = this.state.deck;
         let cards = deck.questions;
-        let cardInPlay = deck.questions[1];
+        let cardInPlay = this.state.cardInPlay;
         return (
             <View style={{flex: 1}}>
                 <View>
@@ -26,28 +48,48 @@ class QuizView extends React.Component {
                     </Text>
                 </View>
                 <View style={styles.question}>
-                    <Text style={styles.questionText}>
-                        {cardInPlay.question}
-                    </Text>
-                    <TouchableOpacity 
-                            style={styles.answerButton}
-                            onPress={() => {}}>
-                        <Text style={{marginTop: 5, fontSize: 16, fontWeight: 'bold', color: red}}>
-                            Answer
-                        </Text>
-                    </TouchableOpacity>
+                    {
+                        this.state.showQuestion && 
+                        <View style={{alignItems: "center"}}>
+                            <Text style={styles.questionText}>
+                                {cardInPlay.question}
+                            </Text>
+                            <TouchableOpacity 
+                                    style={styles.questionAnswerButton}
+                                    onPress={() => this.showAnswer()}>
+                                <Text style={{marginTop: 5, fontSize: 16, fontWeight: 'bold', color: red}}>
+                                    Answer
+                                </Text>
+                            </TouchableOpacity>
+                        </View>
+                    }
+                    {
+                        this.state.showAnswer && 
+                        <View style={{alignItems: "center"}}>
+                            <Text style={styles.questionText}>
+                                {cardInPlay.answer}
+                            </Text>
+                            <TouchableOpacity 
+                                    style={styles.questionAnswerButton}
+                                    onPress={() => this.showQuestion()}>
+                                <Text style={{marginTop: 5, fontSize: 16, fontWeight: 'bold', color: red}}>
+                                    Question
+                                </Text>
+                            </TouchableOpacity>
+                        </View>
+                    }
                 </View>
                 <View style={{alignItems: "center", }}>
                     <TouchableOpacity 
-                            style={styles.selectButton}
-                            onPress={() => {}}>
+                            style={styles.decisionButton}
+                            onPress={() => {this.trackScoreAndDisplayNextCard()}}>
                         <Text style={{fontSize: 20, fontWeight: 'bold', color: white}}>
                             Incorrect
                         </Text>
                     </TouchableOpacity>
                     <TouchableOpacity 
-                            style={[styles.selectButton, {backgroundColor: "green"}]}
-                            onPress={() => {}}>
+                            style={[styles.decisionButton, {backgroundColor: "green"}]}
+                            onPress={() => {this.trackScoreAndDisplayNextCard()}}>
                         <Text style={{fontSize: 20, fontWeight: 'bold', color: white}}>
                             Correct
                         </Text>
@@ -72,7 +114,7 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         textAlign: "center"
     },
-    selectButton: {
+    decisionButton: {
         alignItems: 'center',
         justifyContent: 'center',
         height: 50,
@@ -81,11 +123,11 @@ const styles = StyleSheet.create({
         borderRadius: 7,
         marginBottom: 7
     },
-    answerButton: {
+    questionAnswerButton: {
         alignItems: 'center',
         justifyContent: 'center',
         height: 20,
-        width: 60,
+        width: 70,
     }
 })
 
