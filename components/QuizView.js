@@ -3,6 +3,7 @@ import { StyleSheet, Text, View,
     Dimensions, FlatList, AsyncStorage,
     TouchableOpacity, Button } from 'react-native';
 import { white, black, gray, red, green }from "../utils/colors";
+const quizResults = "quiz results";
 
 class QuizView extends React.Component {
 
@@ -20,6 +21,7 @@ class QuizView extends React.Component {
 
         this.showAnswer = this.showAnswer.bind(this);
         this.showQuestion = this.showQuestion.bind(this);
+        this.calcultateResults = this.calcultateResults.bind(this);
     }
 
     showAnswer = () => {
@@ -34,16 +36,29 @@ class QuizView extends React.Component {
         let nextCardIndex = this.state.deck.questions.indexOf(this.state.cardInPlay)+1;
         status == "correct" ? this.setState({correctAnswers: this.state.correctAnswers+1}) :
             this.setState({incorrectAnswers: this.state.incorrectAnswers+1})
-        this.setState({cardInPlay: this.state.deck.questions[nextCardIndex], 
-            showQuestion: true, showAnswer: false});
+        this.state.deck.questions[nextCardIndex] ? this.setState({cardInPlay: this.state.deck.questions[nextCardIndex], 
+            showQuestion: true, showAnswer: false}) :
+            this.setState({cardInPlay: quizResults});
+    }
+
+    calcultateResults = () => {
+        let numberOfQuestions = this.state.deck.questions.length;
+        return `${(this.state.correctAnswers/numberOfQuestions*100)}%`;
     }
 
     render() {
-        console.log([this.state.correctAnswers]);
         let deck = this.state.deck;
         let cards = deck.questions;
         let cardInPlay = this.state.cardInPlay;
         return (
+            cardInPlay == quizResults ? 
+            <View style={{flex: 1, flexDirection: 'column', justifyContent: 'center'}}>
+                <Text 
+                    style={{fontSize: 50, paddingLeft: 30, paddingRight: 30, fontWeight: "bold", marginTop: -90}}>
+                    You got {this.calcultateResults()} of questions correct
+                </Text>
+            </View> 
+            :
             <View style={{flex: 1, justifyContent: 'space-between'}}>
                 <View>
                     <Text style={{padding: 10, fontWeight: "bold"}}>
