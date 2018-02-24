@@ -3,6 +3,8 @@ import { StyleSheet, Text, View,
     Dimensions, FlatList, AsyncStorage,
     TouchableOpacity, Button } from 'react-native';
 import { white, black, gray, red, green }from "../utils/colors";
+import * as api from "../models/api";
+
 const quizResults = "quiz results";
 
 class QuizView extends React.Component {
@@ -21,7 +23,7 @@ class QuizView extends React.Component {
 
         this.showAnswer = this.showAnswer.bind(this);
         this.showQuestion = this.showQuestion.bind(this);
-        this.calcultateResults = this.calcultateResults.bind(this);
+        this.calcultateResultsAndClearNotifications = this.calcultateResultsAndClearNotifications.bind(this);
     }
 
     showAnswer = () => {
@@ -41,7 +43,9 @@ class QuizView extends React.Component {
             this.setState({cardInPlay: quizResults});
     }
 
-    calcultateResults = () => {
+    calcultateResultsAndClearNotifications = () => {
+        api.clearLocalNotification()
+            .then(api.setLocalNotification);
         let numberOfQuestions = this.state.deck.questions.length;
         return `${(this.state.correctAnswers/numberOfQuestions*100)}%`;
     }
@@ -56,7 +60,7 @@ class QuizView extends React.Component {
                 <View>
                     <Text 
                         style={{fontSize: 50, paddingLeft: 30, paddingRight: 30, fontWeight: "bold", marginTop: -90}}>
-                        You got {this.calcultateResults()} of questions correct
+                        You got {this.calcultateResultsAndClearNotifications()} of questions correct
                     </Text>
                 </View>
                 <View style={{alignItems: 'center', marginTop: 100}}>

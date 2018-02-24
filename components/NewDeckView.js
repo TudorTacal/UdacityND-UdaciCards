@@ -4,6 +4,7 @@ import { StyleSheet, Text, View,
     TouchableOpacity, Button, TextInput } from 'react-native';
 import { white, black, gray }from "../utils/colors";
 import * as api from "../models/api";
+import { getDecks } from '../models/api';
 
 class NewDeckView extends React.Component {
 
@@ -11,14 +12,15 @@ class NewDeckView extends React.Component {
         super(props);
         this.state = {
             deckTitle: "Deck title",
+            deck: null
          };
          this.createNewDeckAsync = this.createNewDeckAsync.bind(this);
     }
 
-    createNewDeckAsync = (deckTitle) => {
-        return api.saveDeckTitle(deckTitle);
+    createNewDeckAsync = async (deckTitle) => {
+        await api.saveDeckTitle(deckTitle);
     }
-
+    
     render() {
         return (
             <React.Fragment>
@@ -39,7 +41,8 @@ class NewDeckView extends React.Component {
                         onChangeText={(deckTitle) => {this.setState({deckTitle})}}/>
                     <TouchableOpacity 
                         style={styles.submitButton}
-                        onPress={()=> this.createNewDeckAsync(this.state.deckTitle)}>
+                        onPress={()=> {this.createNewDeckAsync(this.state.deckTitle);
+                        }}>
                         <Text style={{color: white, fontSize: 24}}>Submit</Text>
                     </TouchableOpacity>
                 </View>

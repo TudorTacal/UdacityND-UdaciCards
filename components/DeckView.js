@@ -37,12 +37,13 @@ class DeckView extends React.Component{
 
     render() {
         let deckFromProps = this.props.navigation.state.params != (null || undefined) ? 
-            this.props.navigation.state.params.deck : null;
+            this.props.navigation.state.params.deck : this.state.deck;
         let deck = this.state.deck || deckFromProps;
         return deck == null ?  
             <AppLoading/> :
             <View style={{justifyContent: 'space-around', flex: 1}}>
                 <View style={styles.deck}>
+                {console.log(deck)}
                     <Text style={{fontSize: 50, fontWeight: 'bold'}}>{deck.title.toLowerCase()}</Text>
                     <Text style={{fontSize: 35, color: gray}}>{deck.questions.length} cards</Text>
                 </View>

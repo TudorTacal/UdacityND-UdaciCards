@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, Dimensions, FlatList, AsyncStorage, TouchableOpacity } from 'react-native';
-import { decks, getDecks, getDeck } from '../models/api';
+import { decks, getDecks, getDeck, setLocalNotification } from '../models/api';
 import { AppLoading } from 'expo';
 import { DeckView } from './DeckView';
 
@@ -17,6 +17,7 @@ class DeckList extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
+            alreadyQuiz: true,
             decks: null,
         }
         this.fetchDecksAsync = this.fetchDecksAsync.bind(this);
@@ -33,6 +34,14 @@ class DeckList extends React.Component {
     render () {
         return this.state.decks == null ?  
             <AppLoading/> :
+            <React.Fragment>
+            { this.state.alreadyQuiz && 
+                <View>
+                    <Text>
+                        Don't forget to practice a quiz today!
+                    </Text>
+                </View> 
+            }
             <View style={{flex: 1}}>
                 <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                     <View style={styles.blackLine}/>
@@ -56,7 +65,6 @@ class DeckList extends React.Component {
                                 'DeckView', 
                                 { 
                                     deck: item.key,
-                                    fetchDecksAsync: this.fetchDecksAsync
                                 }
                             )}>
                                 <View style={styles.deck}>
@@ -69,6 +77,7 @@ class DeckList extends React.Component {
                        }/> 
                 </View>
             </View> 
+            </React.Fragment>
         
     }
 }

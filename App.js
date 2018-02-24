@@ -10,9 +10,8 @@ import {
 } from 'react-navigation';
 import  Icon from 'react-native-vector-icons/MaterialIcons';
 import { white, black } from "./utils/colors";
-import { decks } from './models/api';
+import { decks, setLocalNotification, clearLocalNotification } from './models/api';
 
-AsyncStorage.setItem("decks", JSON.stringify(decks));
 
 const createArrowBack = (navigation) => {
   return (
@@ -110,6 +109,11 @@ const MainNavigator = StackNavigator({
 })
 
 export default class App extends React.Component {
+  componentDidMount() {
+    AsyncStorage.setItem("decks", JSON.stringify(decks));
+    setLocalNotification();
+  }
+
   render() {
     return (
       <View style={{flex: 1}}>
