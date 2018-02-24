@@ -53,10 +53,25 @@ class QuizView extends React.Component {
         return (
             cardInPlay == quizResults ? 
             <View style={{flex: 1, flexDirection: 'column', justifyContent: 'center'}}>
-                <Text 
-                    style={{fontSize: 50, paddingLeft: 30, paddingRight: 30, fontWeight: "bold", marginTop: -90}}>
-                    You got {this.calcultateResults()} of questions correct
-                </Text>
+                <View>
+                    <Text 
+                        style={{fontSize: 50, paddingLeft: 30, paddingRight: 30, fontWeight: "bold", marginTop: -90}}>
+                        You got {this.calcultateResults()} of questions correct
+                    </Text>
+                </View>
+                <View style={{alignItems: 'center', marginTop: 100}}>
+                    <TouchableOpacity 
+                            style={styles.addCardButton} 
+                            onPress={() => 
+                                this.setState({cardInPlay: this.props.navigation.state.params.deck.questions[0]})}>
+                            <Text style={{fontSize: 20, fontWeight: 'bold'}}>Restart Quiz</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity 
+                            style={styles.startQuizButton}
+                            onPress={() => this.props.navigation.goBack(null)}>
+                            <Text style={{fontSize: 20, fontWeight: 'bold', color: white}}>Back to Deck</Text>
+                        </TouchableOpacity>
+                    </View>
             </View> 
             :
             <View style={{flex: 1, justifyContent: 'space-between'}}>
@@ -142,7 +157,26 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         height: 20,
         width: 70,
-    }
+    },
+    addCardButton: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: 80,
+        width: 220,
+        backgroundColor: white,
+        borderColor: black,
+        borderWidth: 2,
+        borderRadius: 7,
+        marginBottom: 15,
+    },
+    startQuizButton: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: 80,
+        width: 220,
+        backgroundColor: black,
+        borderRadius: 7,
+    },
 })
 
 export default QuizView;
