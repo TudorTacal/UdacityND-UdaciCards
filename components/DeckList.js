@@ -33,10 +33,19 @@ class DeckList extends React.Component {
     render () {
         return this.state.decks == null ?  
             <AppLoading/> :
-            <View>
-                <View style={styles.blackLine}/>
-                <View style={styles.deckHeader}>
-                    <Text style={{fontSize: 18, padding: 20}}>DECKS</Text>
+            <View style={{flex: 1}}>
+                <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                    <View style={styles.blackLine}/>
+                    <View style={[styles.deckHeader]}>
+                        <Text style={{fontSize: 18, padding: 20}}>DECKS</Text>
+                    </View>
+                    <TouchableOpacity
+                        onPress={() => 
+                            this.props.navigation.navigate('NewDeckView',
+                            { deck: this.state.deck})}
+                        style={[styles.deckHeader, {alignItems: 'flex-end'}]}>
+                        <Text style={{fontSize: 18, padding: 20}}>NEW DECK</Text>
+                    </TouchableOpacity>
                 </View>
                 <View>
                     <FlatList data={mapKeyToDeck(this.state.decks)} keyExtractor={(item, index) => Math.random()+index} 
@@ -70,10 +79,10 @@ const styles = StyleSheet.create({
         borderTopWidth: 1,
     },
     deckHeader: {
-        width: Dimensions.get('window').width / 2,
+        width: Dimensions.get('window').width / 2.05,
         borderBottomColor: '#FFFF00',
         borderBottomWidth: 3,
-        alignItems: 'center',
+        alignItems: 'flex-start',
     },
     deck: {
         alignItems: 'center',

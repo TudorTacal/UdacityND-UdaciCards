@@ -9,6 +9,7 @@ class NewQuestionView extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            cards: [],
             question: "Add question",
             answer: "Add answer"
          };
@@ -16,8 +17,13 @@ class NewQuestionView extends React.Component {
     }
 
     addCardToDeckAsync = (title, card) => {
-        api.addCardToDeck(title, card);
-        this.props.navigation.state.params.addCard(title, card);
+        if (!this.state.cards.includes(this.state.question)
+             && !this.state.cards.includes(this.state.answer)) {
+            api.addCardToDeck(title, card);
+            this.props.navigation.state.params.addCard(title, card);
+            this.state.cards.push(this.state.question, this.state.answer);
+        }
+        return; 
     }
 
     render() {
@@ -28,11 +34,11 @@ class NewQuestionView extends React.Component {
                 <TextInput 
                     style={[styles.inputField, {marginTop: 25}]}
                     value={this.state.question} 
-                    onChangeText={(question) => this.setState({question})}/>
+                    onChangeText={(question) => {this.setState({question})}}/>
                 <TextInput 
                     style={styles.inputField}
                     value={this.state.answer}
-                    onChangeText={(answer) => this.setState({answer})}/>
+                    onChangeText={(answer) => {this.setState({answer})}}/>
                 <TouchableOpacity 
                     style={styles.submitButton}
                     onPress={()=> this.addCardToDeckAsync(deckId, card)}>

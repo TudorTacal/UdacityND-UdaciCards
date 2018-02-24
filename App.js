@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, AsyncStorage } from 'react-native';
 import DeckList from "./components/DeckList";
 import DeckView from "./components/DeckView";
+import NewDeckView from "./components/NewDeckView";
 import NewQuestionView from "./components/NewQuestionView";
 import QuizView from "./components/QuizView";
 import {
@@ -37,7 +38,15 @@ const createArrowBackMain = (navigation) => {
 
 const MainNavigator = StackNavigator({
   Home: {
-    screen: DeckList
+    screen: DeckList,
+    navigationOptions: ({navigation}) => {
+      return {
+        headerTintColor: "white",
+        headerStyle: {
+          backgroundColor: "white",
+        },
+      }
+    } 
   },
   DeckView: {
     screen: DeckView,
@@ -50,7 +59,6 @@ const MainNavigator = StackNavigator({
           backgroundColor: "black",
         },
         headerLeft: createArrowBackMain(navigation)
-
       }
     } 
   },
@@ -81,7 +89,21 @@ const MainNavigator = StackNavigator({
         headerLeft: createArrowBack(navigation)
       } 
      } 
-  }
+  },
+  NewDeckView: {
+    screen: NewDeckView,
+    navigationOptions: ({navigation}) => {
+      return {
+        title: "decks",
+        headerTitleStyle : {alignSelf: "flex-start", marginLeft: -10, fontSize: 20, fontWeight: 'bold',  },
+        headerTintColor: "white",
+        headerStyle: {
+          backgroundColor: "black",
+        },
+        headerLeft: createArrowBackMain(navigation)
+      }
+    } 
+  },
 }, 
 {
   cardStyle: {backgroundColor: "white"}

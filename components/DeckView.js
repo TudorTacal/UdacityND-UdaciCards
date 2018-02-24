@@ -29,7 +29,6 @@ class DeckView extends React.Component{
         let newDeck = this.state.deck;
         newDeck.questions.push(card);
         this.setState({deck: newDeck})
-        this.props.navigation.state.params.fetchDecksAsync();
     }
 
     componentDidMount() {
@@ -37,7 +36,6 @@ class DeckView extends React.Component{
     }
 
     render() {
-        console.log(this.state.deck, 'in render');
         let deckFromProps = this.props.navigation.state.params != (null || undefined) ? 
             this.props.navigation.state.params.deck : null;
         let deck = this.state.deck || deckFromProps;
