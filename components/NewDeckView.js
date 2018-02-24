@@ -16,7 +16,7 @@ class NewDeckView extends React.Component {
     }
 
     createNewDeckAsync = (deckTitle) => {
-        console.log('hello')
+        return api.saveDeckTitle(deckTitle);
     }
 
     render() {

@@ -16,7 +16,12 @@ export const getDeck = async (id) => {
 }
 
 // saveDeckTitle: take in a single title argument and add it to the decks. 
-export const saveDeckTitle = (title) => {}
+export const saveDeckTitle = (title) => {
+  getDecks().then(decks => {
+    decks.push({[title]: {title, questions: []}})
+    return AsyncStorage.setItem("decks", JSON.stringify(decks));
+  })
+}
 
 // addCardToDeck: take in two arguments, title and card, and will add the card to the list of questions for the deck with the associated title. 
 export const addCardToDeck = (title, card) => {
