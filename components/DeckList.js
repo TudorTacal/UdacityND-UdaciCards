@@ -17,14 +17,8 @@ class DeckList extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            alreadyQuiz: true,
             decks: null,
         }
-        this.deleteNotification = this.deleteNotification.bind(this);
-    }
-
-    deleteNotification = () => {
-        this.setState({alreadyQuiz: false});
     }
 
     componentDidMount() {
@@ -35,13 +29,6 @@ class DeckList extends React.Component {
         return this.state.decks == null ?  
             <AppLoading/> :
             <React.Fragment>
-            { this.state.alreadyQuiz && 
-                <View>
-                    <Text>
-                        Don't forget to practice a quiz today!
-                    </Text>
-                </View> 
-            }
             <View style={{flex: 1}}>
                 <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                     <View style={styles.blackLine}/>

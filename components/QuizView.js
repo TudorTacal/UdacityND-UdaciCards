@@ -46,7 +46,6 @@ class QuizView extends React.Component {
     calcultateResultsAndClearNotifications = () => {
         api.clearLocalNotification()
             .then(api.setLocalNotification);
-        this.props.navigation.state.params.deleteNotification();
         let numberOfQuestions = this.state.deck.questions.length;
         return `${(this.state.correctAnswers/numberOfQuestions*100)}%`;
     }

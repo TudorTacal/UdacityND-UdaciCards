@@ -56,10 +56,8 @@ export function setLocalNotification () {
       if (data === null) {
          Permissions.askAsync(Permissions.NOTIFICATIONS)
           .then(({ status }) => {
-            console.log('status', status);
             if (status === 'granted') {
               Notifications.cancelAllScheduledNotificationsAsync()
-              console.log('status', status);
               let tomorrow = new Date();
               tomorrow.setDate(tomorrow.getDate() + 1);
               tomorrow.setHours(20);
@@ -76,7 +74,7 @@ export function setLocalNotification () {
             AsyncStorage.setItem(NOTIFICATION_KEY, JSON.stringify(true));
             }
             else {
-              alert("Don't forget to pass a quiz today!")
+              console.log("The notification is not being set!");
             }
           })
       }
