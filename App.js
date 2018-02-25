@@ -13,25 +13,11 @@ import { white, black } from "./utils/colors";
 import { decks, setLocalNotification, clearLocalNotification } from './models/api';
 
 
-const createArrowBack = (navigation) => {
+const createArrowBack = (navigation, screen) => {
   return (
     <Icon.Button name="arrow-back" size={28} backgroundColor={black} 
-      onPress={() =>  navigation.goBack(null)}/>
-  )
-}
-
-const createArrowBackDeckView = (navigation) => {
-  return (
-    <Icon.Button name="arrow-back" size={28} backgroundColor={black} 
-      onPress={() =>  navigation.navigate("DeckView")}/>
-  )
-}
-
-const createArrowBackMain = (navigation) => {
-  return (
-    <Icon.Button name="arrow-back" size={28} backgroundColor={black} 
-      onPress={() => {
-       return navigation.navigate("Home")}} />
+      onPress={() =>  screen ? 
+        navigation.navigate(screen) : navigation.goBack(null)}/>
   )
 }
 
@@ -57,7 +43,7 @@ const MainNavigator = StackNavigator({
         headerStyle: {
           backgroundColor: "black",
         },
-        headerLeft: createArrowBackMain(navigation)
+        headerLeft: createArrowBack(navigation, "Home")
       }
     } 
   },
@@ -99,7 +85,7 @@ const MainNavigator = StackNavigator({
         headerStyle: {
           backgroundColor: "black",
         },
-        headerLeft: createArrowBackMain(navigation)
+        headerLeft: createArrowBack(navigation, "Home")
       }
     } 
   },

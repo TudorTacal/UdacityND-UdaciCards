@@ -50,12 +50,10 @@ function createNotification () {
 }
 
 export function setLocalNotification () {
-  console.log('in setLocalNotification');
   AsyncStorage.getItem(NOTIFICATION_KEY)
     .then(JSON.parse)
     .then((data) => {
       if (data === null) {
-        console.log(data);
          Permissions.askAsync(Permissions.NOTIFICATIONS)
           .then(({ status }) => {
             console.log('status', status);

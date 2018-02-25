@@ -42,9 +42,7 @@ class DeckView extends React.Component{
     }
 
     render() {
-        let deckFromProps = this.props.navigation.state.params != (null || undefined) ? 
-            this.props.navigation.state.params.deck : this.state.deck;
-        let deck = this.state.deck || deckFromProps;
+        let deck = this.state.deck || this.props.navigation.state.params.deck;
         return deck == null ?  
             <AppLoading/> :
             <View style={{justifyContent: 'space-around', flex: 1}}>
