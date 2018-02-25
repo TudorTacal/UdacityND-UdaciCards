@@ -13,9 +13,11 @@ class DeckView extends React.Component{
         super(props);
         this.state = {
             deck: null, 
+            newDeck: null
          };
          this.refreshFunction = this.refreshFunction.bind(this);
          this.addCard = this.addCard.bind(this);
+         this.dumpRaw = this.dumpRaw.bind(this);
     }
 
      refreshFunction = (title) => {
@@ -25,6 +27,11 @@ class DeckView extends React.Component{
                 return this.setState({deck: deckObject[Object.keys(deckObject)[0]]})});
     }
 
+    getDeckAsync = (title) => {
+        let deck = api.getDeck(title)
+            .then((deck) => this.setState({newDeck: deck}));
+        console.log(deck);
+    }
     addCard = (title, card) => {
         let newDeck = this.state.deck;
         newDeck.questions.push(card);
@@ -32,7 +39,13 @@ class DeckView extends React.Component{
     }
 
     componentDidMount() {
-        this.setState({deck: this.props.navigation.state.params.deck});
+        console.log('mount', 'DeckView');
+        console.log(this.props.navigation.state.params.title);
+        console.log(api.getDeck(this.props.navigation.state.params.title));
+        this.props.navigation.state.params.deck ? 
+            this.setState({deck: this.props.navigation.state.params.deck}) :
+            api.getDeck(this.props.navigation.state.params.title)
+                .then((deck) => this.setState({deck: deck}))
     }
 
     render() {
@@ -41,7 +54,6 @@ class DeckView extends React.Component{
             <AppLoading/> :
             <View style={{justifyContent: 'space-around', flex: 1}}>
                 <View style={styles.deck}>
-                {console.log(deck)}
                     <Text style={{fontSize: 50, fontWeight: 'bold'}}>{deck.title.toLowerCase()}</Text>
                     <Text style={{fontSize: 35, color: gray}}>{deck.questions.length} cards</Text>
                 </View>
@@ -60,8 +72,7 @@ class DeckView extends React.Component{
                         <Text style={{fontSize: 20, fontWeight: 'bold', color: white}}>Start Quiz</Text>
                     </TouchableOpacity>
                 </View>
-            </View>
-        
+            </View>        
     }
 }
 

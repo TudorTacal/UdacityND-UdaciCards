@@ -11,16 +11,20 @@ class NewDeckView extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            deckTitle: "Deck title",
+            deckTitle: "Deck",
             deck: null
          };
          this.createNewDeckAsync = this.createNewDeckAsync.bind(this);
     }
 
     createNewDeckAsync = async (deckTitle) => {
-        await api.saveDeckTitle(deckTitle);
+        await api.saveDeckTitle(deckTitle, () => {
+            this.props.navigation.navigate('DeckView', 
+            { title: deckTitle});
+        });
     }
     
+
     render() {
         return (
             <React.Fragment>

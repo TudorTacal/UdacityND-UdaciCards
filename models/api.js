@@ -11,17 +11,17 @@ export const getDecks = () => {
 
 // getDeck: take in a single id argument and return the deck associated with that id. 
 export const getDeck = async (id) => {
-  getDecks().then(data => {
-    deck = data.filter(deck => Object.keys(deck)[0] == id)[0];
-    return deck;
-  })
+  return AsyncStorage.getItem(`${id}`)
+  .then(JSON.parse)
+    .then((deck) => {console.log(deck);return deck});
 }
 
 // saveDeckTitle: take in a single title argument and add it to the decks. 
-export const saveDeckTitle =  (title) => {
-  getDecks().then((decks) => {
+export const saveDeckTitle =  (title, callback) => {
+  getDecks().then(async (decks) => {
     decks.push({[title]: {title, questions: []}})
-    AsyncStorage.setItem("decks", JSON.stringify(decks));
+    return await AsyncStorage.setItem("decks", JSON.stringify(decks))
+      .then(async () => await callback());
   })
 }
 
