@@ -20,11 +20,11 @@ class DeckList extends React.Component {
             alreadyQuiz: true,
             decks: null,
         }
-        this.fetchDecksAsync = this.fetchDecksAsync.bind(this);
+        this.deleteNotification = this.deleteNotification.bind(this);
     }
 
-    fetchDecksAsync = () => {
-        getDecks().then((data) => this.setState({decks: data}));
+    deleteNotification = () => {
+        this.setState({alreadyQuiz: false});
     }
 
     componentDidMount() {
@@ -65,6 +65,7 @@ class DeckList extends React.Component {
                                 'DeckView', 
                                 { 
                                     deck: item.key,
+                                    deleteNotification: this.deleteNotification
                                 }
                             )}>
                                 <View style={styles.deck}>

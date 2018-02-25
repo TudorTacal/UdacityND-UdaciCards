@@ -56,7 +56,7 @@ export function setLocalNotification () {
     .then((data) => {
       if (data === null) {
         console.log(data);
-        Permissions.askAsync(Permissions.NOTIFICATIONS)
+         Permissions.askAsync(Permissions.NOTIFICATIONS)
           .then(({ status }) => {
             console.log('status', status);
             if (status === 'granted') {
@@ -76,6 +76,9 @@ export function setLocalNotification () {
               )
 
             AsyncStorage.setItem(NOTIFICATION_KEY, JSON.stringify(true));
+            }
+            else {
+              alert("Don't forget to pass a quiz today!")
             }
           })
       }

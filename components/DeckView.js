@@ -16,6 +16,7 @@ class DeckView extends React.Component{
          };
          this.refreshFunction = this.refreshFunction.bind(this);
          this.addCard = this.addCard.bind(this);
+         this.deleteNotification = this.deleteNotification.bind(this);
     }
 
      refreshFunction = (title) => {
@@ -29,6 +30,11 @@ class DeckView extends React.Component{
         let newDeck = this.state.deck;
         newDeck.questions.push(card);
         this.setState({deck: newDeck})
+    }
+
+    deleteNotification = () => {
+        console.log('delete', 'deckview');
+        this.props.navigation.state.params.deleteNotification();
     }
 
     componentDidMount() {
@@ -56,7 +62,7 @@ class DeckView extends React.Component{
                     </TouchableOpacity>
                     <TouchableOpacity 
                         style={styles.startQuizButton}
-                        onPress={() => this.props.navigation.navigate('QuizView', { deck })
+                        onPress={() => this.props.navigation.navigate('QuizView', { deck, deleteNotification: this.deleteNotification })
                     }>
                         <Text style={{fontSize: 20, fontWeight: 'bold', color: white}}>Start Quiz</Text>
                     </TouchableOpacity>
