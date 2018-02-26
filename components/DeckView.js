@@ -17,7 +17,6 @@ class DeckView extends React.Component{
          };
          this.refreshFunction = this.refreshFunction.bind(this);
          this.addCard = this.addCard.bind(this);
-         this.dumpRaw = this.dumpRaw.bind(this);
     }
 
      refreshFunction = (title) => {
@@ -26,12 +25,7 @@ class DeckView extends React.Component{
                 deckObject = data.filter(deck => Object.keys(deck)[0] == title)[0];
                 return this.setState({deck: deckObject[Object.keys(deckObject)[0]]})});
     }
-
-    getDeckAsync = (title) => {
-        let deck = api.getDeck(title)
-            .then((deck) => this.setState({newDeck: deck}));
-        console.log(deck);
-    }
+    
     addCard = (title, card) => {
         let newDeck = this.state.deck;
         newDeck.questions.push(card);
@@ -39,13 +33,7 @@ class DeckView extends React.Component{
     }
 
     componentDidMount() {
-        console.log('mount', 'DeckView');
-        console.log(this.props.navigation.state.params.title);
-        console.log(api.getDeck(this.props.navigation.state.params.title));
-        this.props.navigation.state.params.deck ? 
-            this.setState({deck: this.props.navigation.state.params.deck}) :
-            api.getDeck(this.props.navigation.state.params.title)
-                .then((deck) => this.setState({deck: deck}))
+        this.setState({deck: this.props.navigation.state.params.deck});
     }
 
     render() {
@@ -67,8 +55,7 @@ class DeckView extends React.Component{
                     <TouchableOpacity 
                         style={styles.startQuizButton}
                         onPress={() => this.props.navigation.navigate('QuizView', 
-                                        { deck, deleteNotification: this.deleteNotification })}
-                    >
+                                        { deck })}>
                         <Text style={{fontSize: 20, fontWeight: 'bold', color: white}}>Start Quiz</Text>
                     </TouchableOpacity>
                 </View>

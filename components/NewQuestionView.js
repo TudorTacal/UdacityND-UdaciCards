@@ -41,7 +41,8 @@ class NewQuestionView extends React.Component {
                     onChangeText={(answer) => {this.setState({answer})}}/>
                 <TouchableOpacity 
                     style={styles.submitButton}
-                    onPress={()=> this.addCardToDeckAsync(deckId, card)}>
+                    onPress={()=> {this.addCardToDeckAsync(deckId, card);
+                        this.props.navigation.goBack(null)}}>
                     <Text style={{color: white, fontSize: 24}}>Submit</Text>
                 </TouchableOpacity>
             </View>
