@@ -66,7 +66,6 @@ class DeckList extends React.Component {
                 </View>
             </View> 
             </React.Fragment>
-        
     }
 }
 

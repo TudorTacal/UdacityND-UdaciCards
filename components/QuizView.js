@@ -51,7 +51,7 @@ class QuizView extends React.Component {
     }
 
     render() {
-         let deck = this.state.deck;
+        let deck = this.state.deck;
         let cards = deck.questions;
         let cardInPlay = this.state.cardInPlay;
         return (
@@ -67,7 +67,8 @@ class QuizView extends React.Component {
                     <TouchableOpacity 
                             style={styles.addCardButton} 
                             onPress={() => 
-                                this.setState({cardInPlay: this.props.navigation.state.params.deck.questions[0]})}>
+                                this.setState({cardInPlay: this.props.navigation.state.params.deck.questions[0],
+                                     correctAnswers: 0, incorrectAnswers: 0})}>
                             <Text style={{fontSize: 20, fontWeight: 'bold'}}>Restart Quiz</Text>
                         </TouchableOpacity>
                         <TouchableOpacity 
