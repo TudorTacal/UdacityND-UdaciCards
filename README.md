@@ -8,6 +8,32 @@ This project encompasses the fundamental aspects of building a native applicatio
 
 The project was created from scratch using `create-react-native-app`. 
 
+## Screenshots
+
+Deck View
+
+![UdaciCardsMainView](/screenshots/UdaciCardsMainView.png "Deck View")
+
+Add Deck
+
+![UdaciCardsAddDeck](./screenshots/UdaciCardsAddDeck.png "Add Deck")
+
+New Deck
+
+![UdaciCardsNewDeck](./screenshots/UdaciCardsNewDeck.png "New Deck")
+
+Add Card
+
+![UdaciCardsAddCard](./screenshots/UdaciCardsAddCard.png "Add Card")
+
+Start Quiz
+
+![UdaciCardsStartQuiz](./screenshots/UdaciCardsStartQuiz.png "Start Quiz")
+
+Finish Quiz
+
+![UdaciCardsFinishQuiz](./screenshots/UdaciCardsFinishQuiz.png "Finish Quiz")
+
 ## To start the project
 
 * Install and start the API server
