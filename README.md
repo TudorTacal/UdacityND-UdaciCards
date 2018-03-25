@@ -10,9 +10,11 @@ The project was created from scratch using `create-react-native-app`.
 
 ## Screenshots
 
+*(sorry for the size :))*
+
 Deck View
 
-![UdaciCardsMainView](/screenshots/UdaciCardsMainView.png "Deck View")
+![UdaciCardsMainView](/screenshots/UdaciCardsMainView.png)
 
 Add Deck
 
